@@ -25,6 +25,19 @@ TypeScript is meant to bring about numerous benefits when writing what would oth
 * This becomes more powerful and the suggestions become more useful/accurate when you write your code using TypeScript's features
 * TypeScript helps document the code you write, and you'll find improved suggestions even when using functions and objects that you have written yourself
 * TypeScript brings stronger "typing" to JavaScript; this is something that exists in many other languages, especially those that are compiled (think C, C++, C#, Rust, or Go)
+    * Static vs. Dynamic Typing
+        * TypeScript gives us the opportunity to engage in "static typing," the idea that at at compile time the code is checked to ensure the program's variables, parameters, arguments, and returns use *consistent* and *correct* data-types
+        * Traditionally, JavaScript is otherwise a language that takes advantage of "dynamic typing," the idea that data-types are checked or handled during runtime (when you actually execute your script)
+    * Strong vs. Weak Typing
+        * TypeScript is strongly typed; there is little room for mixing and matching types without trouble, making your code very predictable
+        * Traditionally, JavaScript is otherwise a language that takes advantage of "weak typing," the idea that it has a way of handling situations where there might be type mis-matching without crashing the program
+            * How many times have you had to run experiments in JavaScript to find out if you get what you expect?
+                * `0 == '0'`
+                * `0 == false`
+                * `0 == []`
+                * `0 == ' '`
+                * `3 + '3'`
+                * `3 + 3`
 
 ## Installation
 
@@ -93,16 +106,22 @@ Notice it has opted for older ways of doing things:
 
 This is in an effort to maximize compatibility. We can customize our target environment, and how TypeScript will handle our project's output though!
 
-Let's create a configuration file:
+Let's create a configuration file. We can either create one manually if we know the JSON properties we want to use, or we can use the command-line tool available for generating one.
+
+```sh
+# tsc --init
+npx tsc --init
+```
 
 ***tsconfig.json***
 
 ```json
 {
     "compilerOptions": {
-        "target": "ES2015", # Modern!
-        "lib": ["ES2015"],  # JS Libraries, objects, functions to be available
-        "watch": true       # Automatically re-compiles your code on-save (doesn't work on all versions)
+        "target": "ES2018",   # Modern!
+        "lib": ["ES2018"],    # JS Libraries, objects, functions to be available
+        "module": "CommonJS", # Support for NodeJS-specific feature(s)
+        "watch": true         # Automatically re-compiles your code on-save (doesn't work on all versions)
     }
 }
 ```
@@ -111,7 +130,12 @@ Now we can run the TypeScript compiler once, and it will listen for changes. Its
 
 ```sh
 # tsc *.ts
-npx tsc *.ts --watch
+npx tsc *.ts
+```
+
+```sh
+# If you'd like to simply pass arguments via the terminal, try:
+npx tsc *.ts --watch --target=ES2018
 ```
 
 ## Stronger Typing in your Code
@@ -142,6 +166,205 @@ myString = 123; // Trying to assign a number now will cause TypeScript to let us
                 // have a typing issue to correct.
 ```
 
-### Explicit Typing
+If you have an obvious initial value in-mind and don't expect the type to change over time, implicit is common. When you're using JavaScript's built-in types, methods, and functions TypeScript will have a good idea as to what to enforce or expect. We'll find that many popular packages and libraries have TypeScript support and we *can* get away with a reasonable amount of implicit typing if we'd like.
+
+### Explicit Typing via Type Annotations
 
 Sometimes the above might not feel clear enough, or there are cases without an initial value to interpret where we will still want to enforce a data-type. In such cases we can instead opt for explicit typing!
+
+```ts
+// let myNum; // This would normally be set to type 'any' as a fallback
+
+// We can be specific, though! Note the colon syntax here:
+let myNum: number;
+
+myNum = 3;   // ✔
+myNum = '3'; // ✖
+
+// We can still be specific even if we have an initial value:
+let myString: string = 'I\'m writing a string.';
+myString = 'Now I\'m a different string.'; // ✔
+myString = 12345678910111213141516171819;  // ✖
+```
+
+What if we want to allow multiple types?
+
+```ts
+// A single vertical line allows us to separate different potential types
+let error: string | boolean = false; // In this example we'll start with a boolean
+
+if(process.argv.length < 3) {
+    // We can easily change between string and boolean
+    error = 'No arguments present.'; // ✔
+} 
+```
+
+### Arrays Basics
+
+Let's think about some other more complex data-types though. What if we want to store an array of a certain data-type?
+
+```ts
+// This will implicitly type our variable as an array...
+const nums = [];
+
+// But if we want to include only numbers, we're out of luck!
+nums.push(1);
+nums.push('test'); // Everything goes...
+```
+
+Let's try again, but explore another TypeScript syntax:
+
+```ts
+// Now we're specifying that we want a number array!
+const nums: number[] = [];
+nums.push(1); // ✔
+nums.push(2); // ✔
+nums.push(3); // ✔
+nums.push('uh oh'); // ✖
+```
+
+What if we want to support multiple types in our array?
+
+```ts
+// Precede the square brackets with parentheses,
+// inside we can specify any data-types permitted
+// in our array:
+const namesAndAges: (string, number)[] = [];
+namesAndAges.push('Quinn');
+namesAndAges.push(35);
+namesAndAges.push('Alice');
+namesAndAges.push(36);
+namesAndAges.push('Sam');
+namesAndAges.push(29);
+namesAndAges.push(30);
+namesAndAges.push(31);
+```
+
+### Interfaces
+
+Arrays are one thing, but what about objects? We work with them all the time, and they're a bit busier having both keys and values stored within. Let's look at the following JavaScript code:
+
+```js
+const users = [];
+
+users.push({
+    name: 'Alexis',
+    birthYear: 1982
+});
+
+users.push({
+    name: 'Baylor',
+    birthYear: 1978
+});
+
+users.push({
+    name: 'Adair'
+});
+```
+
+It can be really difficult to remember the expected shape of an object throughout a program. In the above case we're expected to somehow "know" or remember that all users should have a `name` and `birthYear` property... it also looks like `name` should probably be a string, and `birthYear` should probably be a number. How can we enforce that?
+
+```ts
+// An interface lets us decide on the expected
+// properties and their data-types!
+interface User {
+    name: string;
+    birthYear: number;
+};
+
+// Let's incorporate this pattern in our previous code:
+
+// This is now a User array
+const users: User[] = [];
+
+users.push({
+    name: 'Alexis',
+    birthYear: 1982
+});
+
+users.push({
+    name: 'Baylor',
+    birthYear: 1978
+});
+
+// In this push, TypeScript will notify us that
+// we are missing a property: birthYear
+users.push({
+    name: 'Adair'
+});
+```
+
+What if we want `birthYear` to be optional? We can add a question mark to the key name:
+
+```ts
+interface User {
+    name: string;
+    birthYear?: number; // The question mark makes this property optional
+};
+```
+
+Like the `any` type, we usually want to avoid this next syntax, but we *can* allow any number of additonal properties via the following syntax:
+
+```ts
+interface User {
+    name: string;
+    birthYear?: number;
+    // Allows any new keys that are strings, and values that are type 'any'
+    [key: string]: any; // Avoid this when you can, you're fighting TS' advantages
+};
+```
+
+### Functions
+
+Let's write a simple JavaScript function that returns a hello string.
+
+```js
+const helloWorld = (name='World') => {
+    return `Hello, ${name}`
+};
+
+console.log( helloWorld() );
+console.log( helloWorld('Brenda') );
+```
+
+We can be more explicit by annotating our parameter's allowed type(s), and our return's allowed type(s):
+
+```ts
+// Our 'name' parameter is now optional, but maintains its default 'World' value
+const helloWorld = (name?: string = 'World'): string => {
+    return `Hello, ${name}`; // Now the function MUST return a string
+};
+
+console.log( helloWorld() );
+console.log( helloWorld('Brenda') );
+```
+
+Let's write a simple JavaScript function that calculates the sum of a number array.
+
+```js
+const sum = nums => {
+    let result = 0;
+    nums.forEach(num => result += num);
+    return result;
+};
+
+console.log( sum([1, 2, 3, 4, 5]) ); // 15
+console.log( sum([-90, 10, 150]) );  // 70
+
+// There is a chance we could write code resulting in edge-cases...
+console.log( sum([null, 3, 'hello', 4]) ); // '3hello4'
+console.log( sum() );  // .forEach is a not a function of type: undefined
+```
+
+```ts
+// The parameter specifies a required number array
+const sum = (nums: number[]): number => {
+    let result: number = 0;
+    nums.forEach(num => result += num);
+    return result; // The return MUST be a number
+};
+
+// TypeScript will direct us to only use the function as-described
+console.log( sum([1, 2, 3, 4, 5]) ); // 15
+console.log( sum([-90, 10, 150]) );  // 70
+```
