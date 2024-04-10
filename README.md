@@ -368,3 +368,7 @@ const sum = (nums: number[]): number => {
 console.log( sum([1, 2, 3, 4, 5]) ); // 15
 console.log( sum([-90, 10, 150]) );  // 70
 ```
+
+```sh
+npx create-react-app my-app --template typescript
+```

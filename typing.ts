@@ -8,4 +8,4 @@ myNum = 10;
 myNum = -200;
 myNum = 'abc'; // Trying to assign a string now will cause TypeScript to let us know we have made a mistake
 
-let myFloat: number;
+let 
