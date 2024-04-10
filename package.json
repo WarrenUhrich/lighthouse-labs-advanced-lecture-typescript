@@ -1,0 +1,25 @@
+{
+  "name": "lighthouse-labs-advanced-lecture-typescript",
+  "version": "1.0.0",
+  "description": "* [ ] What is TypeScript? * [ ] Installation * [ ] Using TypeScript",
+  "main": "index.js",
+  "dependencies": {
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WarrenUhrich/lighthouse-labs-advanced-lecture-typescript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WarrenUhrich/lighthouse-labs-advanced-lecture-typescript/issues"
+  },
+  "homepage": "https://github.com/WarrenUhrich/lighthouse-labs-advanced-lecture-typescript#readme"
+}
