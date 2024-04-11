@@ -188,11 +188,16 @@ npx tsc --init
 
 *Note: In-order to utilize the `tsconfig.json` file using `npx`, use the following syntax: `npx tsc --project ./tsconfig.json`.*
 
-Now we can run the TypeScript compiler once, and it will listen for changes. Its target environment will now be modern JavaScript.
+Now we can run the TypeScript compiler once, and it will listen for changes. Its target environment will now be a modern flavour of JavaScript.
+
+```sh
+# If you populate your ./tsconfig with `includes` and a `compilerOptions.outDir`, we can simply run:
+npx tsc --project ./tsconfig.json # Will target all files specificed by tsconfig.json outDir
+```
 
 ```sh
 # tsc *.ts
-npx tsc *.ts
+npx tsc *.ts # Will target all .ts files in this DIR, and convert them to JS right in this very same DIR
 ```
 
 ```sh
@@ -439,11 +444,10 @@ npx create-react-app my-app --template typescript
 
 ## Resources
 
-* See the `outline.md` file in this repo for a cheat-sheet list of commands and features
-    * [Thank you to our very own Andy Lindsay for this!](https://github.com/andydlindsay/lectures/blob/master/advanced-typescript/outline.md)
-* [TypeScript Official Site](https://www.typescriptlang.org/)
-* [TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
-* [TypeScript in 5 Minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
+* [See Andy Lindsay's TS Outline for a Great Cheat Sheet!](https://github.com/andydlindsay/lectures/blob/master/advanced-typescript/outline.md)
+* [Official: TypeScript Official Site](https://www.typescriptlang.org/)
+* [Official: TypeScript Compiler Options](https://www.typescriptlang.org/docs/handbook/compiler-options.html)
+* [Official: TypeScript in 5 Minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 * [YouTube: TypeScript in 100 Seconds](https://www.youtube.com/watch?v=zQnBQ4tB3ZA)
     * [YouTube: TypeScript - The Basics](https://www.youtube.com/watch?v=ahCwqrYpIuM)
 * [Book: OReilly Safari Programming TypeScript](https://www.oreilly.com/library/view/programming-typescript/9781492037644/)
