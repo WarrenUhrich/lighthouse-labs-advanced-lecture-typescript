@@ -119,16 +119,19 @@ npx tsc --init
 
 ```json
 {
+    "include": [], // Which file(s) and folder(s) to include
+    "exclude": [], // Which file(s) and folder(s) to exclude
     "compilerOptions": {
-        "target": "ES2018",   # Modern!
-        "lib": ["ES2018"],    # JS Libraries, objects, functions to be available
-        "module": "CommonJS", # Support for NodeJS-specific feature(s)
-        "watch": true         # Automatically re-compiles your code on-save (doesn't work on all versions of TS)
+        "target": "ES2018",   // Modern!
+        "lib": ["ES2018"],    // JS Libraries, objects, functions to be available
+        "module": "CommonJS", // Support for NodeJS-specific feature(s)
+        "watch": true,        // Automatically re-compiles your code on-save (doesn't work on all versions of TS)
+        "outDir": "./build/"  // Which directory to place the converted project in
     }
 }
 ```
 
-*Note: In-order to utilize the `tsconfig.json` file using `npx`, use the following syntax: `npx tsc --project ./tsconfig.json ./your-script.ts`.*
+*Note: In-order to utilize the `tsconfig.json` file using `npx`, use the following syntax: `npx tsc --project ./tsconfig.json`.*
 
 Now we can run the TypeScript compiler once, and it will listen for changes. Its target environment will now be modern JavaScript.
 
