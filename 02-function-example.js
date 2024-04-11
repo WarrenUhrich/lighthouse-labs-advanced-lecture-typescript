@@ -1,0 +1,7 @@
+var sayHello = function (name) {
+    if (name === void 0) { name = 'World'; }
+    return "Hello, ".concat(name, "!");
+};
+console.log(sayHello()); // Hello, World!
+console.log(sayHello('Matthew')); // Hello, Matthew!
+console.log(sayHello('Charli')); // Hello, Charli!
