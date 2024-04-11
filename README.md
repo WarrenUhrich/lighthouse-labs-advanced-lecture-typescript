@@ -1,6 +1,6 @@
 # Lighthouse Labs | Advanced Lecture: TypeScript
 
-[GitHub Repository Branch](https://github.com/WarrenUhrich/lighthouse-labs-advanced-lecture-typescript/tree/2024.04.11-web-flex-day-16october2023)
+[GitHub Repository Branch](https://github.com/WarrenUhrich/lighthouse-labs-advanced-lecture-typescript/tree/2024.04.11-web-flex-day-16october2023) | [Vimeo Video Recording](https://vimeo.com/933419783/926a1ffe23?share=copy)
 
 * [X] What is TypeScript?
 * [X] Installation
