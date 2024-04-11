@@ -1,2 +1,5 @@
-# lighthouse-labs-advanced-lecture-typescript
-TypeScript advanced lecture for Lighthouse Labs.
+# Lighthouse Labs | Advanced Lecture: TypeScript
+
+* [ ] What is TypeScript?
+* [ ] Installation
+* [ ] Using TypeScript
